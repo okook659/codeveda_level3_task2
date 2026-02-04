@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import { User } from "./models/user";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { authMiddleware } from "./middleware/authMiddleware";
 
 const app: Application = express();
 
@@ -153,7 +154,6 @@ app.post("/auth/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Trouver l'utilisateur
     const user = await User.findOne({ email });
 
     if (!user) {
@@ -164,7 +164,6 @@ app.post("/auth/login", async (req, res) => {
       return;
     }
 
-    // COMPARER LE MOT DE PASSE
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
@@ -188,6 +187,39 @@ app.post("/auth/login", async (req, res) => {
       success: true,
       message: "Login successful",
       token: token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+      },
+    });
+  } catch (error: any) {
+    console.log(error);
+    res.status(400).json({
+      status: 400,
+      message: error.message.toString(),
+    });
+  }
+});
+
+app.get("/auth/profile", authMiddleware, async (req, res) => {
+  try {
+    console.log(req.userId);
+    const user = await User.findById(req.userId).select("-password");
+
+    console.log(user);
+
+    if (!user) {
+      res.status(404).json({
+        status: 404,
+        message: "User not found",
+      });
+      return;
+    }
+
+    res.status(200).json({
+      status: 200,
+      success: true,
       user: {
         id: user._id,
         name: user.name,
