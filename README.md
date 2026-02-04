@@ -1,20 +1,66 @@
-# To Do List App with Javascript
+# User Authentication System with JWT
 
-As a part of my internship at Codveda, i had to develop a todo list app using javascript. Here were the main objectives : 
-* Use HTML and CSS for layout and design.
-* Implement JavaScript for adding, updating, and deleting tasks.
-* Store tasks in the browser’s local storage to persist data.
+As a part of my learning journey, I developed a complete authentication system using Node.js, Express, and MongoDB. Here were the main objectives:
+* Implement user registration with password hashing using bcrypt
+* Create secure login functionality with JWT token generation
+* Protect sensitive routes using authentication middleware
+* Store user data securely in MongoDB
+
+## Tech Stack
+
+* **Backend**: Node.js, Express, TypeScript
+* **Database**: MongoDB with Mongoose
+* **Authentication**: JWT (JSON Web Tokens)
+* **Security**: bcrypt for password hashing
+
+## Features
+
+✅ User registration with email validation  
+✅ Secure password hashing (bcrypt)  
+✅ JWT-based authentication  
+✅ Protected routes with middleware  
+✅ User profile endpoint  
+
+## API Endpoints
+
+### Public Routes
+* `POST /auth/register` - Register a new user
+* `POST /auth/login` - Login and receive JWT token
+
+### Protected Routes
+* `GET /auth/profile` - Get current user profile (requires JWT token)
+
+## Installation
+```bash
+npm install
+```
+## Run
+```bash
+npm run dev
+```
 
 ## Screenshots
 
-* Tasks 
+* Register 
 
-![tasks](assets/tasks.jpg)
+![Register](src/assets/register.jpg)
 
-* Tasks stored in localStorage
+* Login
 
-![stored](assets/storage.jpg)
+![Login](src/assets/login.jpg)
 
-* Tasks stored with one done
+* Error Login
 
-![stored with one done](assets/storage_done.jpg)
+![Error](src/assets/wrong-pass-login.jpg)
+
+* Profile 
+
+![Error](src/assets/profile.jpg)
+
+* JWT Decode 
+
+![Error](src/assets/decode.jpg)
+
+* Database
+
+![Error](src/assets/database.jpg)
